@@ -2,7 +2,7 @@ import { type RouteRecordRaw } from 'vue-router';
 import { defineStore } from 'pinia';
 import { useWsStore } from './ws';
 import { store } from '@/store';
-import { login } from '@/api/login';
+import { getRedisVeriCode, login } from '@/api/login';
 import { ACCESS_TOKEN_KEY } from '@/enums/cacheEnum';
 import { Storage } from '@/utils/Storage';
 import { logout, getInfo, permmenu } from '@/api/account';
@@ -68,6 +68,22 @@ export const useUserStore = defineStore({
         return Promise.reject(error);
       }
     },
+    /**
+     * 返回redis缓存验证码
+     * @returns redis verification code
+     */
+    async getRedisCode(parms) {
+      try {
+        const data: any = await getRedisVeriCode(parms);
+        data.then((res) => {
+          console.log('res :>>', res);
+        });
+        return data;
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    },
+
     /** 登录成功之后, 获取用户信息以及生成权限路由 */
     async afterLogin() {
       try {

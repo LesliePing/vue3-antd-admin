@@ -12,6 +12,13 @@ declare namespace API {
     token: string;
   };
 
+  /**
+   * 获取验证码
+   */
+  type RedisCode = {
+    number: number;
+  };
+
   /** 获取验证码参数 */
   type CaptchaParams = {
     width?: number;

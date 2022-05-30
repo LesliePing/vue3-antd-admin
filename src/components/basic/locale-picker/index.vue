@@ -50,7 +50,9 @@
     selectedKeys.value = [lang as string];
     props.reload && location.reload();
   }
-
+  /**
+   * 切换语言
+   */
   function handleMenuClick({ key }) {
     if (unref(getLocale) === key) {
       return;

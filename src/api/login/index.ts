@@ -19,6 +19,21 @@ export function login(data: API.LoginParams) {
   );
 }
 /**
+ * @description 获取 redis 缓存验证码
+ */
+export function getRedisVeriCode(data) {
+  return request<BaseResponse<API.RedisCode>>(
+    {
+      url: 'rediscode',
+      method: 'post',
+      data,
+    },
+    {
+      isGetDataDirectly: false,
+    },
+  );
+}
+/**
  * @description 获取验证码
  */
 export function getImageCaptcha(params?: API.CaptchaParams) {

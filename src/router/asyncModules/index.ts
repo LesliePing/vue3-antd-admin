@@ -13,5 +13,3 @@ modulesFiles.keys().forEach((path) => {
     constantRouterComponents[ele] = value[ele];
   });
 });
-
-console.log('constantRouterComponents', constantRouterComponents);

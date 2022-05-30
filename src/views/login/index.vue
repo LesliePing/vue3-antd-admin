@@ -43,6 +43,16 @@
         <a-button type="primary" html-type="submit" size="large" :loading="state.loading" block>
           登录
         </a-button>
+        <a-button
+          type="secondary"
+          class="mt-3"
+          html-type="submit"
+          size="large"
+          block
+          @click="autoFill"
+        >
+          自动登录
+        </a-button>
       </a-form-item>
     </a-form>
   </div>
@@ -54,10 +64,11 @@
   import { useRoute, useRouter } from 'vue-router';
   import { message, Modal } from 'ant-design-vue';
   import { useUserStore } from '@/store/modules/user';
-  import { getImageCaptcha } from '@/api/login';
+  import { getImageCaptcha, getRedisVeriCode } from '@/api/login';
 
   const state = reactive({
     loading: false,
+    redisVeriCode: '',
     captcha: '',
     formInline: {
       username: '',
@@ -71,15 +82,26 @@
   const router = useRouter();
 
   const userStore = useUserStore();
-
+  /**
+   * 设置验证码
+   */
   const setCaptcha = async () => {
     const { id, img } = await getImageCaptcha({ width: 100, height: 50 });
     state.captcha = img;
     state.formInline.captchaId = id;
+    getRedisVeriCode({ captchaId: state.formInline.captchaId }).then((res: any) => {
+      state.redisVeriCode = res.data.number;
+    });
   };
   setCaptcha();
+  const autoFill = () => {
+    state.formInline.username = 'rootadmin';
+    state.formInline.password = '123456';
+    state.formInline.verifyCode = state.redisVeriCode;
+  };
 
   const handleSubmit = async () => {
+    getRedisVeriCode({ captchaId: state.formInline.captchaId });
     const { username, password, verifyCode } = state.formInline;
     if (username.trim() == '' || password.trim() == '') {
       return message.warning('用户名或密码不能为空！');
@@ -89,7 +111,6 @@
     }
     message.loading('登录中...', 0);
     state.loading = true;
-    console.log(state.formInline);
     // params.password = md5(password)
     try {
       await userStore.login(state.formInline).finally(() => {

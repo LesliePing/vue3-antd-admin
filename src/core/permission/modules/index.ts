@@ -38,4 +38,3 @@ export const permissions: Permissions = modulesPermissionFiles
     // console.log('permissions modules', modules);
     return modules;
   }, {});
-console.log('permissions', permissions);
