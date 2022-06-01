@@ -251,6 +251,7 @@
       }
 
       .ant-tabs-tab-remove {
+        width: 12px;
         display: flex;
         padding: 0;
         margin: 0;
@@ -261,14 +262,14 @@
       }
 
       .ant-tabs-tab:not(.ant-tabs-tab-active) {
-        .ant-tabs-tab-remove {
-          width: 0;
-        }
-
         .anticon-close {
           width: 0;
           visibility: hidden;
           transition: width 0.3s;
+        }
+
+        .ant-tabs-tab-remove {
+          width: 12px;
         }
 
         &:hover {
@@ -276,10 +277,6 @@
             width: 16px;
             visibility: visible;
             padding-left: 6px;
-          }
-
-          .ant-tabs-tab-remove {
-            width: unset;
           }
         }
       }

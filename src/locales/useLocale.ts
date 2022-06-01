@@ -38,6 +38,7 @@ export function useLocale() {
   // Switching the language will change the locale of useI18n
   // And submit to configuration modification
   async function changeLocale(locale: LocaleType) {
+    console.log('locale :>>', locale);
     const globalI18n = i18n.global;
     const currentLocale = unref(globalI18n.locale);
     if (currentLocale === locale) {
@@ -55,7 +56,6 @@ export function useLocale() {
 
     globalI18n.setLocaleMessage(locale, message);
     loadLocalePool.push(locale);
-
     setI18nLanguage(locale);
     return locale;
   }
